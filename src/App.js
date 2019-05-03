@@ -1,26 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import DrawingForm from './DrawingForm';
+import DrawingList from './DrawingList';
+import Drawing from './Drawing';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+  };
+
+  selectDrawing = (drawing) => {
+    this.setState({
+      selectedDrawing: drawing,
+    });
+  }
+
+  render() {
+    let ctrl = (
+      <div>
+        <DrawingForm />
+
+        <DrawingList
+          selectDrawing={this.selectDrawing}
+        />
+      </div>
+    );
+
+    if (this.state.selectedDrawing) {
+      ctrl = (
+        <Drawing
+          drawing={this.state.selectedDrawing}
+          key={this.state.selectedDrawing.id}
+        />
+      );
+    }
+
+    return (
+      <div className="App">
+        <div className="App-header">
+          <h2>WhiteBoard</h2>
+        </div>
+
+        { ctrl }
+      </div>
+    );
+  }
 }
 
 export default App;
